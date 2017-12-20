@@ -23,8 +23,8 @@ sub _cache_driver {
 sub _cache_key {
     require MT::Util;
 
-    my ($author, $token) = @_;
-    MT::Util::perl_sha1_digest_hex(join('::', $author->id, $token));
+    my ($user, $token) = @_;
+    MT::Util::perl_sha1_digest_hex(join('::', $user->id, $token));
 }
 
 sub show_settings {
@@ -36,12 +36,13 @@ sub show_settings {
 sub render_form {
     my ($cb, $app, $param) = @_;
 
+    my $user = $app->user;
     my $token = sprintf('%06d', rand 1000000);
-    _cache_driver()->set(_cache_key($param->{author}, $token), $token);
+    _cache_driver()->set(_cache_key($user, $token), $token);
 
     my %head = (
         id      => 'fma_email',
-        To      => $param->{author}->email,
+        To      => $user->email,
         Subject => plugin()->translate('Security token for signing in to the Movable Type'),
     );
 
