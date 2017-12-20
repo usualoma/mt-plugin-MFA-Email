@@ -1,0 +1,20 @@
+id: MFAEmail
+name: MFA-Email
+version: 0.0.1
+
+description: <__trans phrase="This plugin enables multi factor authentication by email.">
+author_name: Taku AMANO
+author_link: http://blog.taaas.jp/
+plugin_link: http://blog.taaas.jp/mt/mfa/
+
+l10n_lexicon:
+  ja:
+    This plugin enables multi factor authentication by email.: "Eメールによる多要素認証の機能を有効にします"
+    Please input security code that has been received by e-mail.: "メールに記載された確認コードを入力してください"
+    Security token for signing in to the Movable Type: "Movable Typeにサインインするための確認コード"
+    Security token: "確認コード"
+
+callbacks:
+  mfa_show_settings: $MFAEmail::MT::Plugin::MFA::Email::show_settings
+  mfa_render_form:   $MFAEmail::MT::Plugin::MFA::Email::render_form
+  mfa_verify_token:  $MFAEmail::MT::Plugin::MFA::Email::verify_token
