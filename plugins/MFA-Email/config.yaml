@@ -1,6 +1,6 @@
 id: MFAEmail
 name: MFA-Email
-version: 0.0.2
+version: 0.9.0
 
 description: <__trans phrase="This plugin enables multi factor authentication by email.">
 author_name: Taku AMANO
