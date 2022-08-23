@@ -36,31 +36,32 @@ sub show_settings {
 sub render_form {
     my ($cb, $app, $param) = @_;
 
-    my $user = $app->user;
-    my $token = sprintf('%06d', rand 1000000);
-    _cache_driver()->set(_cache_key($user, $token), $token);
+    if (my $user = $app->user) {
+        my $token = sprintf('%06d', rand 1000000);
+        _cache_driver()->set(_cache_key($user, $token), $token);
 
-    my %head = (
-        id      => 'fma_email',
-        To      => $user->email,
-        Subject => plugin()->translate('Security token for signing in to the Movable Type'),
-    );
+        my %head = (
+            id      => 'fma_email',
+            To      => $user->email,
+            Subject => plugin()->translate('Security token for signing in to the Movable Type'),
+        );
 
-    my $body = MT->build_page_in_mem(plugin()->load_tmpl('email.tmpl'), {
-        token => $token,
-    });
-
-    require MT::Mail;
-    MT::Mail->send( \%head, $body )
-        or $app->log({
-            message => $app->translate(
-                'Error sending mail: [_1]',
-                MT::Mail->errstr
-            ),
-            level    => MT::Log::ERROR(),
-            class    => 'system',
-            category => 'email'
+        my $body = MT->build_page_in_mem(plugin()->load_tmpl('email.tmpl'), {
+            token => $token,
         });
+
+        require MT::Mail;
+        MT::Mail->send( \%head, $body )
+            or $app->log({
+                message => $app->translate(
+                    'Error sending mail: [_1]',
+                    MT::Mail->errstr
+                ),
+                level    => MT::Log::ERROR(),
+                class    => 'system',
+                category => 'email'
+            });
+    }
 
     push @{$param->{templates}}, plugin()->load_tmpl('form.tmpl');
 }
