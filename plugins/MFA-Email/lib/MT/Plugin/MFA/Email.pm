@@ -27,12 +27,6 @@ sub _cache_key {
     MT::Util::perl_sha1_digest_hex(join('::', $user->id, $token));
 }
 
-sub show_settings {
-    my ($cb, $app, $param) = @_;
-
-    push @{$param->{templates}}, plugin()->load_tmpl('settings.tmpl');
-}
-
 sub render_form {
     my ($cb, $app, $param) = @_;
 

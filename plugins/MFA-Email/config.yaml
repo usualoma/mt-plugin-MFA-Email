@@ -1,6 +1,6 @@
 id: MFAEmail
 name: MFA-Email
-version: 0.9.0
+version: 0.10.0
 
 description: <__trans phrase="This plugin enables multi factor authentication by email.">
 author_name: Taku AMANO
@@ -15,6 +15,5 @@ l10n_lexicon:
     Security token: "確認コード"
 
 callbacks:
-  mfa_show_settings: $MFAEmail::MT::Plugin::MFA::Email::show_settings
   mfa_render_form:   $MFAEmail::MT::Plugin::MFA::Email::render_form
   mfa_verify_token:  $MFAEmail::MT::Plugin::MFA::Email::verify_token
